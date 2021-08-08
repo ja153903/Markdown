@@ -7,6 +7,7 @@ import {
   UPDATE_MARKDOWN_TITLE,
   UPDATE_MARKDOWN_TEXT,
   MarkdownProviderProps,
+	MarkdownContextType
 } from '../types/MarkdownContextTypes';
 
 const initialState: MarkdownState = {
@@ -14,16 +15,20 @@ const initialState: MarkdownState = {
   text: '',
 };
 
-const MarkdownContext = React.createContext<
-  { state: MarkdownState; dispatch: MarkdownDispatch } | undefined
->(undefined);
+const MarkdownContext = React.createContext<MarkdownContextType>(undefined);
 
 function reducer(state: MarkdownState, action: MarkdownAction) {
   switch (action.type) {
     case UPDATE_MARKDOWN_TITLE:
-      return state;
+      return {
+        ...state,
+        title: action.payload.title,
+      };
     case UPDATE_MARKDOWN_TEXT:
-      return state;
+      return {
+        ...state,
+        text: action.payload.text,
+      };
     default:
       throw new Error('Unhandled action type');
   }
@@ -41,4 +46,6 @@ function MarkdownProvider({ children }: MarkdownProviderProps) {
   );
 }
 
-export { MarkdownProvider };
+const useMarkdownContext = (): MarkdownContextType => React.useContext<MarkdownContextType>(MarkdownContext);
+
+export { MarkdownProvider, useMarkdownContext };

@@ -9,11 +9,13 @@ export const DELETE_MARKDOWN_POST = 'DELETE_MARKDOWN_POST';
 export const GET_MARKDOWN_POST = 'GET_MARKDOWN_POST';
 
 export type MarkdownAction =
-  | { type: 'UPDATE_MARKDOWN_TITLE' }
-  | { type: 'UPDATE_MARKDOWN_TEXT' };
+  | { type: 'UPDATE_MARKDOWN_TITLE'; payload: { title: string } }
+  | { type: 'UPDATE_MARKDOWN_TEXT'; payload: { text: string } };
 
 export type MarkdownDispatch = (action: MarkdownAction) => void;
 
 export type MarkdownState = { title: string; text: string | undefined | null };
 
 export type MarkdownProviderProps = { children: React.ReactNode };
+
+export type MarkdownContextType = { state: MarkdownState; dispatch: MarkdownDispatch } | undefined;
